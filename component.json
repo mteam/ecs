@@ -1,0 +1,16 @@
+{
+  "name": "ecs",
+  "repo": "mteam/ecs",
+  "version": "0.1.0",
+  "dependencies": {
+    "mteam/component-model": "*",
+    "mteam/helpers": "*"
+  },
+  "scripts": [
+    "index.js",
+    "entity.js",
+    "finder.js",
+    "manager.js",
+    "system.js"
+  ]
+}
