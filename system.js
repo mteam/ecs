@@ -1,12 +1,12 @@
 var to = require('helpers').to,
     Component = require('component-model').Component;
 
-function System() {
-  if (this.name == null) {
+function System(name) {
+  if (name == null) {
     throw new Error('System name has not been specified');
   }
 
-  Component.call(this, this.name);
+  Component.call(this, name);
 }
 
 System.prototype = Object.create(Component.prototype);
