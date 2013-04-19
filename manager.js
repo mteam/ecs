@@ -30,17 +30,14 @@ SystemManager.prototype.createFinder = function(components) {
   return new Finder(this.entities, components);
 };
 
-SystemManager.prototype.update = function(dt) {
-  for (var i = 0, c; i < this.components.length; i++) {
-    c = this.components[i];
-    c.update && c.update(dt);
-  }
-};
+SystemManager.prototype.iterator = function(name) {
+  var self = this;
 
-SystemManager.prototype.draw = function() {
-  for (var i = 0, c; i < this.components.length; i++) {
-    c = this.components[i];
-    c.draw && c.draw();
+  return function() {
+    for (var i = 0, system; i < self.components.length; i++) {
+      system = self.components[i];
+      system[name] && system[name].apply(system, arguments);
+    }
   }
 };
 
