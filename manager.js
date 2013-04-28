@@ -1,6 +1,6 @@
 var is = require('helpers').is,
     Container = require('component-model').Container,
-    Finder = require('./finder');
+    Filter = require('container-filter');
 
 function SystemManager(entities) {
   Container.call(this);
@@ -22,12 +22,8 @@ SystemManager.prototype.add = function(system) {
   Container.prototype.add.call(this, system);
 };
 
-SystemManager.prototype.getSystem = function(name) {
-  return this.get(name);
-};
-
 SystemManager.prototype.createFinder = function(components) {
-  return new Finder(this.entities, components);
+  return new Filter(this.entities, components);
 };
 
 SystemManager.prototype.iterator = function(name) {

@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "dependencies": {
     "mteam/component-model": "*",
+    "mteam/container-filter": "*",
     "mteam/helpers": "*"
   },
   "scripts": [

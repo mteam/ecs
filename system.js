@@ -20,8 +20,12 @@ System.prototype.find = function() {
   return this.getParent().createFinder(to.array(arguments));
 };
 
-System.prototype.getSystem = function(name) {
-  return this.getParent().getSystem(name);
+System.prototype.system = function(name) {
+  return this.getParent().get(name);
+};
+
+System.prototype.entities = function() {
+  return this.getParent().entities;
 };
 
 module.exports = System;
