@@ -2,7 +2,9 @@ var is = require('helpers').is,
     Container = require('component-model').Container,
     Filter = require('container-filter');
 
-function SystemManager(entities) {
+module.exports = SystemContainer;
+
+function SystemContainer(entities) {
   Container.call(this);
 
   if (!(entities instanceof Container)) {
@@ -12,9 +14,10 @@ function SystemManager(entities) {
   this.entities = entities;
 }
 
-SystemManager.prototype = Object.create(Container.prototype);
+var proto = SystemContainer.prototype =
+  Object.create(Container.prototype);
 
-SystemManager.prototype.add = function(system) {
+proto.add = function(system) {
   if (is.func(system)) {
     system = new system;
   }
@@ -22,11 +25,11 @@ SystemManager.prototype.add = function(system) {
   Container.prototype.add.call(this, system);
 };
 
-SystemManager.prototype.createFinder = function(components) {
+proto.createFinder = function(components) {
   return new Filter(this.entities, components);
 };
 
-SystemManager.prototype.iterator = function(name) {
+proto.iterator = function(name) {
   var self = this;
 
   return function() {
@@ -36,5 +39,3 @@ SystemManager.prototype.iterator = function(name) {
     }
   }
 };
-
-module.exports = SystemManager;
