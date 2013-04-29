@@ -10,7 +10,7 @@
   "scripts": [
     "index.js",
     "entity.js",
-    "system.js"
-    "container.js",
+    "system.js",
+    "container.js"
   ]
 }
