@@ -25,7 +25,7 @@ proto.add = function(system) {
   Container.prototype.add.call(this, system);
 };
 
-proto.createFinder = function(components) {
+proto.createFilter = function(components) {
   return new Filter(this.entities, components);
 };
 

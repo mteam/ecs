@@ -17,7 +17,7 @@ System.prototype.attach = function(parent) {
 };
 
 System.prototype.find = function() {
-  return this.getParent().createFinder(to.array(arguments));
+  return this.getParent().createFilter(to.array(arguments));
 };
 
 System.prototype.system = function(name) {
