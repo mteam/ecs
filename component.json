@@ -3,14 +3,14 @@
   "repo": "mteam/ecs",
   "version": "0.1.0",
   "dependencies": {
-    "mteam/component-model": "*",
+    "mteam/container": "*",
     "mteam/container-filter": "*",
     "mteam/helpers": "*"
   },
   "scripts": [
     "index.js",
     "entity.js",
-    "system.js",
-    "container.js"
+    "entity_container.js",
+    "system_container.js"
   ]
 }

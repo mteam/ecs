@@ -1,3 +1,3 @@
-exports.Entity = require('./entity');
-exports.System = require('./system');
-exports.Container = require('./container');
+exports.Entity = require('./entity.js');
+exports.EntityContainer = require('./entity_container.js');
+exports.SystemContainer = require('./system_container.js');
