@@ -1,7 +1,8 @@
 var Container = require('container'),
     Filter = require('container-filter');
     to = require('helpers').to,
-    is = require('helpers').is;
+    is = require('helpers').is,
+    Entity = require('./entity.js');
 
 module.exports = EntityContainer;
 
