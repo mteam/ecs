@@ -10,6 +10,8 @@ function EntityContainer() {
   Container.call(this);
 }
 
+EntityContainer.prototype = Object.create(Container.prototype);
+
 EntityContainer.prototype.select = function() {
   var components = to.array(arguments),
       filter = new Filter(this, components);
@@ -17,10 +19,11 @@ EntityContainer.prototype.select = function() {
   return filter;
 };
 
-EntityContainer.prototype.add = function(name) {
+EntityContainer.prototype.add = function() {
   var components = to.array(arguments);
 
-  if (is.string(name)) {
+  if (is.string(arguments[0])) {
+    var name = arguments[0];
     components.splice(0, 1);
   }
 
