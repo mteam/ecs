@@ -7,6 +7,11 @@
     "mteam/container-filter": "*",
     "mteam/helpers": "*"
   },
+  "development": {
+    "visionmedia/mocha": "*",
+    "timoxley/assert": "*",
+    "michalmiskernik/sham": "*"
+  },
   "scripts": [
     "index.js",
     "entity.js",
