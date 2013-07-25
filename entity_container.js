@@ -1,34 +1,24 @@
-var Container = require('container'),
-    Filter = require('container-filter');
-    to = require('helpers').to,
-    is = require('helpers').is,
-    Entity = require('./entity.js');
-
-module.exports = EntityContainer;
+var Container = require('container');
+var Entity = require('./entity.js');
+var Filter = require('container-filter');
 
 function EntityContainer() {
   Container.call(this);
 }
 
 EntityContainer.prototype = Object.create(Container.prototype);
+EntityContainer.prototype.constructor = EntityContainer;
 
 EntityContainer.prototype.select = function() {
-  var components = to.array(arguments),
-      filter = new Filter(this, components);
+  var components = Array.prototype.slice.call(arguments);
+  var filter = new Filter(this, components);
 
   return filter;
 };
 
 EntityContainer.prototype.add = function() {
-  var components = to.array(arguments);
-
-  if (is.string(arguments[0])) {
-    var name = arguments[0];
-    components.splice(0, 1);
-  }
-
-  var entity = new Entity(name);
-  components.forEach(entity.add, entity);
-
+  var entity = Entity.create.apply(Entity, arguments);
   Container.prototype.add.call(this, entity);
 };
+
+module.exports = EntityContainer;

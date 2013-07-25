@@ -4,8 +4,7 @@
   "version": "0.1.0",
   "dependencies": {
     "mteam/container": "*",
-    "mteam/container-filter": "*",
-    "mteam/helpers": "*"
+    "mteam/container-filter": "*"
   },
   "development": {
     "visionmedia/mocha": "*",
