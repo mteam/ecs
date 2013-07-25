@@ -16,7 +16,7 @@ EntityContainer.prototype.select = function() {
   return filter;
 };
 
-EntityContainer.prototype.add = function() {
+EntityContainer.prototype.create = function() {
   var entity = Entity.create.apply(Entity, arguments);
   Container.prototype.add.call(this, entity);
 };
