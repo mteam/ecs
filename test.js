@@ -56,10 +56,10 @@ describe('ecs', function() {
       bar: { name: 'bar' }
     };
 
-    it('adds named entities', function() {
+    it('creates named entities', function() {
       var container = new EntityContainer;
 
-      container.add('entity', components.foo, components.bar);
+      container.create('entity', components.foo, components.bar);
 
       var entity = container.get('entity');
 
@@ -67,10 +67,10 @@ describe('ecs', function() {
       assert.deepEqual(entity.components, [components.foo, components.bar]);
     });
 
-    it('adds unnamed entities', function() {
+    it('creates unnamed entities', function() {
       var container = new EntityContainer;
 
-      container.add(components.foo, components.bar);
+      container.create(components.foo, components.bar);
 
       var entity = container.components[0];
 
