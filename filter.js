@@ -27,6 +27,12 @@ Filter.prototype.change = function(entity) {
   }
 };
 
+Filter.prototype.remove = function(entity) {
+  if (this.matches(entity)) {
+    BaseSet.prototype.remove.call(this, entity);
+  }
+};
+
 Filter.prototype.matches = function(entity) {
   return this.components.every(entity.has, entity);
 };
