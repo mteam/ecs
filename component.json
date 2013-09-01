@@ -1,20 +1,21 @@
 {
   "name": "ecs",
   "repo": "mteam/ecs",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "dependencies": {
-    "mteam/container": "*",
-    "mteam/container-filter": "*"
+    "component/bind": "*",
+    "mteam/events": "*"
   },
   "development": {
-    "visionmedia/mocha": "*",
-    "timoxley/assert": "*",
-    "michalmiskernik/sham": "*"
+    "component/assert": "*",
+    "visionmedia/mocha": "*"
   },
   "scripts": [
-    "index.js",
+    "base_set.js",
     "entity.js",
-    "entity_container.js",
-    "system_container.js"
+    "filter.js",
+    "index.js",
+    "set.js",
+    "sorter.js"
   ]
 }

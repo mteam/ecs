@@ -1,3 +1,4 @@
 exports.Entity = require('./entity.js');
-exports.EntityContainer = require('./entity_container.js');
-exports.SystemContainer = require('./system_container.js');
+exports.EntitySet = require('./set.js');
+exports.Filter = require('./filter.js');
+exports.Sorter = require('./sorter.js');

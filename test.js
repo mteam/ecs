@@ -1,83 +1,115 @@
-var assert = require('assert'),
-    sham = require('sham');
-
-var Entity = require('ecs/entity.js'),
-    EntityContainer = require('ecs/entity_container.js'),
-    SystemContainer = require('ecs/system_container.js');
+var assert = require('assert');
+var ecs = require('ecs');
 
 describe('ecs', function() {
 
-  describe('SystemContainer', function() {
-
-    it('adds systems', function() {
-      var entities = new EntityContainer,
-          container = new SystemContainer(entities);
-
-      var foo = sham.spy().args(entities).called(),
-          bar = sham.spy().args(entities).called();
-
-      container.add(foo);
-      container.add(bar);
-
-      foo.check();
-      bar.check();
-    });
-
-    it('creates iterator', function() {
-      var container = new SystemContainer(new EntityContainer);
-
-      function foo() {}
-      foo.prototype.baz = sham.spy('baz').called().args(1, 2, 3);
-
-      function bar() {}
-      bar.prototype.baz = sham.spy('baz').called().args(1, 2, 3);
-      bar.prototype.quux = sham.spy('quux').called().args(4, 5, 6);
-
-      container.add(foo);
-      container.add(bar);
-
-      var ifoo = container.iterator('baz'),
-          ibar = container.iterator('quux');
-
-      ifoo(1, 2, 3);
-      ibar(4, 5, 6);
-
-      foo.prototype.baz.check();
-      bar.prototype.baz.check();
-      bar.prototype.quux.check();
-    });
-
-  });
-
-  describe('EntityContainer', function() {
+  describe('EntitySet', function() {
 
     var components = {
       foo: { name: 'foo' },
       bar: { name: 'bar' }
     };
 
-    it('creates named entities', function() {
-      var container = new EntityContainer;
+    it('creates entities', function() {
+      var es = new ecs.EntitySet();
+      es.create('entity', components.foo, components.bar);
 
-      container.create('entity', components.foo, components.bar);
+      var entity = es.items[0];
 
-      var entity = container.get('entity');
-
-      assert.ok(entity);
-      assert.deepEqual(entity.components, [components.foo, components.bar]);
+      assert(entity.name == 'entity');
+      assert(entity.components.foo == components.foo);
+      assert(entity.components.bar == components.bar);
     });
 
-    it('creates unnamed entities', function() {
-      var container = new EntityContainer;
+    it('removes entities', function() {
+      var es = new ecs.EntitySet();
+      var entity = es.create('entity');
+      es.remove(entity);
 
-      container.create(components.foo, components.bar);
-
-      var entity = container.components[0];
-
-      assert.equal(entity.name, null);
-      assert.deepEqual(entity.components, [components.foo, components.bar]);
+      assert(es.items.length == 0);
     });
 
+  });
+
+  describe('Filter', function() {
+    
+    it('filters entities', function() {
+      var es = new ecs.EntitySet();
+      es.create({ name: 'foo' });
+
+      var filter = es.select('foo', 'baz');
+      es.create({ name: 'foo' }, { name: 'bar' });
+      es.create({ name: 'foo' }, { name: 'baz' });
+      es.create({ name: 'foo' }, { name: 'baz' }, { name: 'bar' });
+      es.create({ name: 'bar' });
+
+      assert(filter.items.length == 2);
+    });
+
+    it('reacts to added/removed components', function() {
+      var es = new ecs.EntitySet();
+      var filter = es.select('foo');
+
+      var entity = es.create();
+      assert(filter.items.length == 0);
+
+      entity.add({ name: 'foo' });
+      assert(filter.items.length == 1);
+
+      entity.remove('foo');
+      assert(filter.items.length == 0);
+    });
+
+    it('returns single entity', function() {
+      var es = new ecs.EntitySet();
+      var filter = es.select();
+      var entity = es.create();
+
+      assert(filter.single() == entity);
+
+      es.create();
+
+      try {
+        filter.single();
+        assert(false, 'no exception thrown');
+      } catch (err) {
+        assert(err);
+      }
+    });
+  
+  });
+
+  describe('Sorter', function() {
+
+    function entity(a) {
+      return ecs.Entity.create({
+        name: 'foo',
+        a: a
+      });
+    }
+    
+    it('sorts components', function() {
+      var es = new ecs.EntitySet();
+
+      var three = entity(3);
+      es.add(three);
+      es.add(entity(7));
+      es.add(entity(5));
+
+      var sorter = new ecs.Sorter(es, function(a, b) {
+        return a.get('foo').a - b.get('foo').a;
+      });
+
+      es.add(entity(2));
+      es.add(entity(4));
+      es.add(entity(8));
+      es.remove(three);
+
+      assert(sorter.items[0].get('foo').a == 2);
+      assert(sorter.items[2].get('foo').a == 5);
+      assert(sorter.items[4].get('foo').a == 8);
+    });
+  
   });
 
 });

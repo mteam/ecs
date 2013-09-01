@@ -1,5 +1,3 @@
-var Container = require('container');
-
 Entity.create = function() {
   var components = Array.prototype.slice.call(arguments);
 
@@ -15,18 +13,40 @@ Entity.create = function() {
 };
 
 function Entity(name) {
-  Container.call(this, name);
+  this.name = name;
+  this.components = {};
 }
 
-Entity.prototype = Object.create(Container.prototype);
-Entity.prototype.constructor = Entity;
+Entity.prototype.attach = function(collection) {
+  this.collection = collection;
+};
+
+Entity.prototype.change = function() {
+  if (this.collection) {
+    this.collection.trigger('change', this);
+  }
+};
+
+Entity.prototype.get = function(name) {
+  return this.components[name];
+};
+
+Entity.prototype.has = function(name) {
+  return name in this.components;
+};
 
 Entity.prototype.add = function(component) {
   if (typeof component == 'function') {
     component = new component();
   }
+  
+  this.components[component.name] = component;
+  this.change();
+};
 
-  Container.prototype.add.call(this, component);
+Entity.prototype.remove = function(name) {
+  delete this.components[name];
+  this.change();
 };
 
 module.exports = Entity;
