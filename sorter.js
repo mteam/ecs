@@ -6,15 +6,15 @@ function Sorter(entities, compare) {
 
   this.compare = compare;
 
-  entities.on('change', bind(this, this.change));
-  entities.on('remove', bind(this, this.remove));
-  entities.items.forEach(this.change, this);
+  entities.on('change', bind(this, this.onChange));
+  entities.on('remove', bind(this, this.onRemove));
+  entities.items.forEach(this.onChange, this);
 }
 
 Sorter.prototype = Object.create(BaseSet.prototype);
 Sorter.prototype.constructor = Sorter;
 
-Sorter.prototype.change = function(entity) {
+Sorter.prototype.onChange = function(entity) {
   this.trigger('change', entity);
 
   var items = this.items;
@@ -27,6 +27,10 @@ Sorter.prototype.change = function(entity) {
   }
 
   items.push(entity);
+};
+
+Sorter.prototype.onRemove = function(entity) {
+  this.remove(entity);
 };
 
 module.exports = Sorter;

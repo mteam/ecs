@@ -6,15 +6,15 @@ function Filter(entities, components) {
 
   this.components = components;
 
-  entities.on('change', bind(this, 'change'));
-  entities.on('remove', bind(this, 'remove'));
-  entities.items.forEach(this.change, this);
+  entities.on('change', bind(this, 'onChange'));
+  entities.on('remove', bind(this, 'onRemove'));
+  entities.items.forEach(this.onChange, this);
 }
 
 Filter.prototype = Object.create(BaseSet.prototype);
 Filter.prototype.constructor = Filter;
 
-Filter.prototype.change = function(entity) {
+Filter.prototype.onChange = function(entity) {
   var matches = this.matches(entity);
   var has = this.has(entity);
 
@@ -27,7 +27,7 @@ Filter.prototype.change = function(entity) {
   }
 };
 
-Filter.prototype.remove = function(entity) {
+Filter.prototype.onRemove = function(entity) {
   if (this.matches(entity)) {
     BaseSet.prototype.remove.call(this, entity);
   }

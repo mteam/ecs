@@ -50,14 +50,16 @@ describe('ecs', function() {
       var es = new ecs.EntitySet();
       var filter = es.select('foo');
 
-      var entity = es.create();
+      var e1 = es.create();
+      var e2 = es.create({ name: 'bar' });
       assert(filter.items.length == 0);
 
-      entity.add({ name: 'foo' });
+      e1.add({ name: 'foo' });
+      e2.add({ name: 'foo' });
+      assert(filter.items.length == 2);
+
+      e1.remove('foo');
       assert(filter.items.length == 1);
-
-      entity.remove('foo');
-      assert(filter.items.length == 0);
     });
 
     it('returns single entity', function() {

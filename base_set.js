@@ -11,7 +11,7 @@ BaseSet.prototype.add = function(entity) {
 };
 
 BaseSet.prototype.has = function(entity) {
-  return ~this.items.indexOf(entity);
+  return !!~this.items.indexOf(entity);
 };
 
 BaseSet.prototype.remove = function(entity) {
