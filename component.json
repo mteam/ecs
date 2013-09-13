@@ -1,7 +1,7 @@
 {
   "name": "ecs",
   "repo": "mteam/ecs",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "dependencies": {
     "component/bind": "*",
     "mteam/events": "*"
