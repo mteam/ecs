@@ -8,6 +8,7 @@ function Filter(entities, components) {
 
   entities.on('change', bind(this, 'onChange'));
   entities.on('remove', bind(this, 'onRemove'));
+  entities.on('clear', bind(this, 'clear'));
   entities.items.forEach(this.onChange, this);
 }
 

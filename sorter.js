@@ -6,8 +6,9 @@ function Sorter(entities, compare) {
 
   this.compare = compare;
 
-  entities.on('change', bind(this, this.onChange));
-  entities.on('remove', bind(this, this.onRemove));
+  entities.on('change', bind(this, 'onChange'));
+  entities.on('remove', bind(this, 'onRemove'));
+  entities.on('clear', bind(this, 'clear'));
   entities.items.forEach(this.onChange, this);
 }
 

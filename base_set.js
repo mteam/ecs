@@ -25,4 +25,9 @@ BaseSet.prototype.remove = function(entity) {
   }
 };
 
+BaseSet.prototype.clear = function() {
+  this.items.length = 0;
+  this.trigger('clear');
+};
+
 module.exports = BaseSet;

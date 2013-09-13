@@ -78,6 +78,16 @@ describe('ecs', function() {
         assert(err);
       }
     });
+
+    it('clears', function() {
+      var es = new ecs.EntitySet();
+      var filter = es.select();
+
+      es.create();
+      es.clear();
+
+      assert(filter.items.length == 0);
+    });
   
   });
 
@@ -110,6 +120,16 @@ describe('ecs', function() {
       assert(sorter.items[0].get('foo').a == 2);
       assert(sorter.items[2].get('foo').a == 5);
       assert(sorter.items[4].get('foo').a == 8);
+    });
+
+    it('clears', function() {
+      var es = new ecs.EntitySet();
+      var sorter = new ecs.Sorter(es, function() { return 0 });
+
+      es.create();
+      es.clear();
+
+      assert(sorter.items.length == 0);
     });
   
   });
