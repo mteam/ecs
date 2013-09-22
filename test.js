@@ -3,6 +3,22 @@ var ecs = require('ecs');
 
 describe('ecs', function() {
 
+  describe('Entity', function() {
+    
+    it('disables components', function() {
+      var e = new ecs.Entity();
+
+      e.add({ name: 'foo' });
+
+      e.disable('foo');
+      assert(!e.has('foo'));
+
+      e.enable('foo');
+      assert(e.has('foo'));
+    });
+  
+  });
+
   describe('EntitySet', function() {
 
     var components = {
